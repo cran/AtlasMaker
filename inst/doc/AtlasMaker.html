@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Getting Started with AtlasMaker</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Getting Started with AtlasMaker</h1>
+
+
+
+<p>This vignette will walk through creating a 4 tab leaflet-based Shiny
+App of New York state biodiversity for an outdoor enthusiast. Point,
+polyline, and polygon data should be in a leaflet-compatible format
+prior to proceeding with the following steps for your own project.</p>
+<div class="sourceCode" id="section-cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="section-cb1-1"><a href="#section-cb1-1" tabindex="-1"></a><span class="fu">library</span>(AtlasMaker)</span>
+<span id="section-cb1-2"><a href="#section-cb1-2" tabindex="-1"></a><span class="fu">library</span>(shiny)</span></code></pre></div>
+<div class="sourceCode" id="section-cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="section-cb2-1"><a href="#section-cb2-1" tabindex="-1"></a><span class="fu">data</span>(atlas_data)</span></code></pre></div>
+<p>Provided datasets for this vignette come from <a href="https://data.ny.gov/" class="uri">https://data.ny.gov/</a>, with
+the exception of counties_NY which was accessed through the
+<code>tigris</code> package and then combines with the biodiversity
+data. Preprocssed datasets include:</p>
+<p>Polygons:<br />
+counties_NY (via tigris package)</p>
+<p>amphibians<br />
+birds<br />
+flowering_plants<br />
+reptiles</p>
+<p>Points:<br />
+points_campgrounds<br />
+points_parks<br />
+points_watchsites</p>
+<p>Polylines:<br />
+roads_ny_interstate</p>
+<p>Taking a look at a few of the datasets:</p>
+<div class="sourceCode" id="section-cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="section-cb3-1"><a href="#section-cb3-1" tabindex="-1"></a><span class="fu">class</span>(birds)</span>
+<span id="section-cb3-2"><a href="#section-cb3-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;SpatialPolygonsDataFrame&quot;</span></span>
+<span id="section-cb3-3"><a href="#section-cb3-3" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;package&quot;)</span></span>
+<span id="section-cb3-4"><a href="#section-cb3-4" tabindex="-1"></a><span class="co">#&gt; [1] &quot;sp&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="section-cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="section-cb4-1"><a href="#section-cb4-1" tabindex="-1"></a><span class="fu">head</span>(points_campgrounds)</span>
+<span id="section-cb4-2"><a href="#section-cb4-2" tabindex="-1"></a><span class="co">#&gt;                   label      long      lat</span></span>
+<span id="section-cb4-3"><a href="#section-cb4-3" tabindex="-1"></a><span class="co">#&gt; 1        Lakeside Beach -78.24370 43.36638</span></span>
+<span id="section-cb4-4"><a href="#section-cb4-4" tabindex="-1"></a><span class="co">#&gt; 2            Letchworth -77.97577 42.64592</span></span>
+<span id="section-cb4-5"><a href="#section-cb4-5" tabindex="-1"></a><span class="co">#&gt; 3            Long Point -76.69841 42.71741</span></span>
+<span id="section-cb4-6"><a href="#section-cb4-6" tabindex="-1"></a><span class="co">#&gt; 4            Long Point -76.21706 44.02844</span></span>
+<span id="section-cb4-7"><a href="#section-cb4-7" tabindex="-1"></a><span class="co">#&gt; 5    Macomb Reservation -73.61241 44.61786</span></span>
+<span id="section-cb4-8"><a href="#section-cb4-8" tabindex="-1"></a><span class="co">#&gt; 6 Margaret Lewis Norrie -73.93896 41.84154</span></span></code></pre></div>
+<div class="sourceCode" id="section-cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="section-cb5-1"><a href="#section-cb5-1" tabindex="-1"></a><span class="fu">class</span>(roads_ny_interstate)</span>
+<span id="section-cb5-2"><a href="#section-cb5-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;sf&quot;         &quot;data.frame&quot;</span></span></code></pre></div>
+<div id="section-creating-lists-for-map-tab-creation" class="section level1">
+<h1>Creating Lists for Map Tab Creation</h1>
+<p>First, we create one list per type of spatial data for each tab we
+need in the final AtlasMaker Shiny App. We’ll make four for this
+vignette: Flowering Plants, Birds, Amphibians &amp; Reptiles, and
+All.</p>
+<div id="section-tab-1---flowering-plants" class="section level2">
+<h2>Tab 1 - Flowering Plants</h2>
+<p>For our first Flowering Plants tab, we create one list for the needed
+polygons and provide the name to be referenced, the datafile which is
+already in a spatial dataframe format, and then provide which variable
+should be used for the label (‘name’) and which variable should be used
+for the polygon fill (‘fill_value’). In this example, the fill_value is
+the biodiversity of flowering plants in the given New York state
+county.</p>
+<div class="sourceCode" id="section-cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="section-cb6-1"><a href="#section-cb6-1" tabindex="-1"></a><span class="do">## polygons list for tab 1: flowering plants-------------</span></span>
+<span id="section-cb6-2"><a href="#section-cb6-2" tabindex="-1"></a>polys_flowering_plants <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="section-cb6-3"><a href="#section-cb6-3" tabindex="-1"></a>    <span class="fu">list</span>(</span>
+<span id="section-cb6-4"><a href="#section-cb6-4" tabindex="-1"></a>        <span class="at">name =</span> <span class="st">&#39;flowering_plants&#39;</span>,</span>
+<span id="section-cb6-5"><a href="#section-cb6-5" tabindex="-1"></a>        <span class="at">data =</span> flowering_plants,</span>
+<span id="section-cb6-6"><a href="#section-cb6-6" tabindex="-1"></a>        <span class="at">label =</span> <span class="st">&#39;name&#39;</span>,</span>
+<span id="section-cb6-7"><a href="#section-cb6-7" tabindex="-1"></a>        <span class="at">fill =</span> <span class="st">&#39;fill_value&#39;</span></span>
+<span id="section-cb6-8"><a href="#section-cb6-8" tabindex="-1"></a>    )</span>
+<span id="section-cb6-9"><a href="#section-cb6-9" tabindex="-1"></a>)</span></code></pre></div>
+<p>With just the list above, the Flowering Plant tab would display New
+York state with shaded counties based on the biodiversity fill_value.
+Let’s add some points to the map as well. With the list below, we name
+and choose the spatial dataframe with point data of where parks are in
+New York. Next, we map which variables in the spatial dataframe
+correspond with the long, lat, and label.</p>
+<div class="sourceCode" id="section-cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="section-cb7-1"><a href="#section-cb7-1" tabindex="-1"></a><span class="do">## points list for tab 1: flowering plants-------------</span></span>
+<span id="section-cb7-2"><a href="#section-cb7-2" tabindex="-1"></a>points_flowering_plants <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="section-cb7-3"><a href="#section-cb7-3" tabindex="-1"></a>    <span class="fu">list</span>(</span>
+<span id="section-cb7-4"><a href="#section-cb7-4" tabindex="-1"></a>        <span class="at">name =</span> <span class="st">&#39;points_parks&#39;</span>,</span>
+<span id="section-cb7-5"><a href="#section-cb7-5" tabindex="-1"></a>        <span class="at">data =</span> points_parks,</span>
+<span id="section-cb7-6"><a href="#section-cb7-6" tabindex="-1"></a>        <span class="at">long =</span> <span class="st">&#39;long&#39;</span>,</span>
+<span id="section-cb7-7"><a href="#section-cb7-7" tabindex="-1"></a>        <span class="at">lat =</span> <span class="st">&#39;lat&#39;</span>,</span>
+<span id="section-cb7-8"><a href="#section-cb7-8" tabindex="-1"></a>        <span class="at">label =</span> <span class="st">&#39;label&#39;</span></span>
+<span id="section-cb7-9"><a href="#section-cb7-9" tabindex="-1"></a>    )</span>
+<span id="section-cb7-10"><a href="#section-cb7-10" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="section-tab-2---birds" class="section level2">
+<h2>Tab 2 - Birds</h2>
+<p>Our next tab for Birds is quite similar, but we add a polylines list
+to show where New York interstates run with the <code>lines_birds</code>
+list. We also need two sets of points to display both campgrounds and
+wildlife watchsites, and these are nested into the larger
+<code>points_birds</code> list.</p>
+<div class="sourceCode" id="section-cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="section-cb8-1"><a href="#section-cb8-1" tabindex="-1"></a><span class="do">## polygon list for tab 2: birds-------------</span></span>
+<span id="section-cb8-2"><a href="#section-cb8-2" tabindex="-1"></a>polys_birds <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="section-cb8-3"><a href="#section-cb8-3" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="section-cb8-4"><a href="#section-cb8-4" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&#39;birds&#39;</span>,</span>
+<span id="section-cb8-5"><a href="#section-cb8-5" tabindex="-1"></a>    <span class="at">data =</span> birds,</span>
+<span id="section-cb8-6"><a href="#section-cb8-6" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">&#39;name&#39;</span>,</span>
+<span id="section-cb8-7"><a href="#section-cb8-7" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">&#39;fill_value&#39;</span></span>
+<span id="section-cb8-8"><a href="#section-cb8-8" tabindex="-1"></a>  )</span>
+<span id="section-cb8-9"><a href="#section-cb8-9" tabindex="-1"></a>)</span>
+<span id="section-cb8-10"><a href="#section-cb8-10" tabindex="-1"></a></span>
+<span id="section-cb8-11"><a href="#section-cb8-11" tabindex="-1"></a><span class="do">## polyline list for tab 2: birds-------------</span></span>
+<span id="section-cb8-12"><a href="#section-cb8-12" tabindex="-1"></a>lines_birds <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="section-cb8-13"><a href="#section-cb8-13" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="section-cb8-14"><a href="#section-cb8-14" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&#39;ny_interstates&#39;</span>,</span>
+<span id="section-cb8-15"><a href="#section-cb8-15" tabindex="-1"></a>    <span class="at">data =</span> roads_ny_interstate</span>
+<span id="section-cb8-16"><a href="#section-cb8-16" tabindex="-1"></a>  )</span>
+<span id="section-cb8-17"><a href="#section-cb8-17" tabindex="-1"></a>)</span>
+<span id="section-cb8-18"><a href="#section-cb8-18" tabindex="-1"></a></span>
+<span id="section-cb8-19"><a href="#section-cb8-19" tabindex="-1"></a><span class="do">## points list for tab 2: birds-------------</span></span>
+<span id="section-cb8-20"><a href="#section-cb8-20" tabindex="-1"></a>points_birds <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="section-cb8-21"><a href="#section-cb8-21" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="section-cb8-22"><a href="#section-cb8-22" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&#39;points_watchsites&#39;</span>,</span>
+<span id="section-cb8-23"><a href="#section-cb8-23" tabindex="-1"></a>    <span class="at">data =</span> points_watchsites,</span>
+<span id="section-cb8-24"><a href="#section-cb8-24" tabindex="-1"></a>    <span class="at">long =</span> <span class="st">&#39;long&#39;</span>,</span>
+<span id="section-cb8-25"><a href="#section-cb8-25" tabindex="-1"></a>    <span class="at">lat =</span> <span class="st">&#39;lat&#39;</span>,</span>
+<span id="section-cb8-26"><a href="#section-cb8-26" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">&#39;label&#39;</span></span>
+<span id="section-cb8-27"><a href="#section-cb8-27" tabindex="-1"></a>  ),</span>
+<span id="section-cb8-28"><a href="#section-cb8-28" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="section-cb8-29"><a href="#section-cb8-29" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&#39;points_campgrounds&#39;</span>,</span>
+<span id="section-cb8-30"><a href="#section-cb8-30" tabindex="-1"></a>    <span class="at">data =</span> points_campgrounds,</span>
+<span id="section-cb8-31"><a href="#section-cb8-31" tabindex="-1"></a>    <span class="at">long =</span> <span class="st">&#39;long&#39;</span>,</span>
+<span id="section-cb8-32"><a href="#section-cb8-32" tabindex="-1"></a>    <span class="at">lat =</span> <span class="st">&#39;lat&#39;</span>,</span>
+<span id="section-cb8-33"><a href="#section-cb8-33" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">&#39;label&#39;</span></span>
+<span id="section-cb8-34"><a href="#section-cb8-34" tabindex="-1"></a>  )</span>
+<span id="section-cb8-35"><a href="#section-cb8-35" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="section-tab-3-4" class="section level2">
+<h2>Tab 3 &amp; 4</h2>
+<p>For Tab 3 we decide to show both our amphibian and reptiles data, so
+<code>polys_amp_rep</code> is a nested list. Tab 4 will display all the
+biodiversity data, so has an even larger nested list for it’s polygon
+list.</p>
+<div class="sourceCode" id="section-cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="section-cb9-1"><a href="#section-cb9-1" tabindex="-1"></a><span class="do">## polygon list for tab 3: amph &amp; rept -------------</span></span>
+<span id="section-cb9-2"><a href="#section-cb9-2" tabindex="-1"></a>polys_amph_rept <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="section-cb9-3"><a href="#section-cb9-3" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="section-cb9-4"><a href="#section-cb9-4" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&#39;amphibians&#39;</span>,</span>
+<span id="section-cb9-5"><a href="#section-cb9-5" tabindex="-1"></a>    <span class="at">data =</span> amphibians,</span>
+<span id="section-cb9-6"><a href="#section-cb9-6" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">&#39;name&#39;</span>,</span>
+<span id="section-cb9-7"><a href="#section-cb9-7" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">&#39;fill_value&#39;</span></span>
+<span id="section-cb9-8"><a href="#section-cb9-8" tabindex="-1"></a>  ),</span>
+<span id="section-cb9-9"><a href="#section-cb9-9" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="section-cb9-10"><a href="#section-cb9-10" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&#39;reptiles&#39;</span>,</span>
+<span id="section-cb9-11"><a href="#section-cb9-11" tabindex="-1"></a>    <span class="at">data =</span> reptiles,</span>
+<span id="section-cb9-12"><a href="#section-cb9-12" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">&#39;label&#39;</span>,</span>
+<span id="section-cb9-13"><a href="#section-cb9-13" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">&#39;fill_value&#39;</span></span>
+<span id="section-cb9-14"><a href="#section-cb9-14" tabindex="-1"></a>  )</span>
+<span id="section-cb9-15"><a href="#section-cb9-15" tabindex="-1"></a>)</span>
+<span id="section-cb9-16"><a href="#section-cb9-16" tabindex="-1"></a></span>
+<span id="section-cb9-17"><a href="#section-cb9-17" tabindex="-1"></a><span class="do">## point list for tab 3: amph &amp; rept-------------</span></span>
+<span id="section-cb9-18"><a href="#section-cb9-18" tabindex="-1"></a>points_amp_rept <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="section-cb9-19"><a href="#section-cb9-19" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="section-cb9-20"><a href="#section-cb9-20" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&#39;points_parks&#39;</span>,</span>
+<span id="section-cb9-21"><a href="#section-cb9-21" tabindex="-1"></a>    <span class="at">data =</span> points_parks,</span>
+<span id="section-cb9-22"><a href="#section-cb9-22" tabindex="-1"></a>    <span class="at">long =</span> <span class="st">&#39;long&#39;</span>,</span>
+<span id="section-cb9-23"><a href="#section-cb9-23" tabindex="-1"></a>    <span class="at">lat =</span> <span class="st">&#39;lat&#39;</span>,</span>
+<span id="section-cb9-24"><a href="#section-cb9-24" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">&#39;label&#39;</span></span>
+<span id="section-cb9-25"><a href="#section-cb9-25" tabindex="-1"></a>  ),</span>
+<span id="section-cb9-26"><a href="#section-cb9-26" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="section-cb9-27"><a href="#section-cb9-27" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&#39;points_campgrounds&#39;</span>,</span>
+<span id="section-cb9-28"><a href="#section-cb9-28" tabindex="-1"></a>    <span class="at">data =</span> points_campgrounds,</span>
+<span id="section-cb9-29"><a href="#section-cb9-29" tabindex="-1"></a>    <span class="at">long =</span> <span class="st">&#39;long&#39;</span>,</span>
+<span id="section-cb9-30"><a href="#section-cb9-30" tabindex="-1"></a>    <span class="at">lat =</span> <span class="st">&#39;lat&#39;</span>,</span>
+<span id="section-cb9-31"><a href="#section-cb9-31" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">&#39;label&#39;</span></span>
+<span id="section-cb9-32"><a href="#section-cb9-32" tabindex="-1"></a></span>
+<span id="section-cb9-33"><a href="#section-cb9-33" tabindex="-1"></a>  )</span>
+<span id="section-cb9-34"><a href="#section-cb9-34" tabindex="-1"></a>)</span>
+<span id="section-cb9-35"><a href="#section-cb9-35" tabindex="-1"></a></span>
+<span id="section-cb9-36"><a href="#section-cb9-36" tabindex="-1"></a><span class="do">## for tab 4-------------</span></span>
+<span id="section-cb9-37"><a href="#section-cb9-37" tabindex="-1"></a><span class="do">## polygons list for tab 4: all-------------</span></span>
+<span id="section-cb9-38"><a href="#section-cb9-38" tabindex="-1"></a>polys_all <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="section-cb9-39"><a href="#section-cb9-39" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="section-cb9-40"><a href="#section-cb9-40" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&#39;flowering_plants&#39;</span>,</span>
+<span id="section-cb9-41"><a href="#section-cb9-41" tabindex="-1"></a>    <span class="at">data =</span> flowering_plants,</span>
+<span id="section-cb9-42"><a href="#section-cb9-42" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">&#39;name&#39;</span>,</span>
+<span id="section-cb9-43"><a href="#section-cb9-43" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">&#39;fill_value&#39;</span></span>
+<span id="section-cb9-44"><a href="#section-cb9-44" tabindex="-1"></a>  ),</span>
+<span id="section-cb9-45"><a href="#section-cb9-45" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="section-cb9-46"><a href="#section-cb9-46" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&#39;birds&#39;</span>,</span>
+<span id="section-cb9-47"><a href="#section-cb9-47" tabindex="-1"></a>    <span class="at">data =</span> birds,</span>
+<span id="section-cb9-48"><a href="#section-cb9-48" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">&#39;name&#39;</span>,</span>
+<span id="section-cb9-49"><a href="#section-cb9-49" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">&#39;fill_value&#39;</span></span>
+<span id="section-cb9-50"><a href="#section-cb9-50" tabindex="-1"></a>  ),</span>
+<span id="section-cb9-51"><a href="#section-cb9-51" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="section-cb9-52"><a href="#section-cb9-52" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&#39;amphibians&#39;</span>,</span>
+<span id="section-cb9-53"><a href="#section-cb9-53" tabindex="-1"></a>    <span class="at">data =</span> amphibians,</span>
+<span id="section-cb9-54"><a href="#section-cb9-54" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">&#39;name&#39;</span>,</span>
+<span id="section-cb9-55"><a href="#section-cb9-55" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">&#39;fill_value&#39;</span></span>
+<span id="section-cb9-56"><a href="#section-cb9-56" tabindex="-1"></a>  ),</span>
+<span id="section-cb9-57"><a href="#section-cb9-57" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="section-cb9-58"><a href="#section-cb9-58" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&#39;reptiles&#39;</span>,</span>
+<span id="section-cb9-59"><a href="#section-cb9-59" tabindex="-1"></a>    <span class="at">data =</span> reptiles,</span>
+<span id="section-cb9-60"><a href="#section-cb9-60" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">&#39;label&#39;</span>,</span>
+<span id="section-cb9-61"><a href="#section-cb9-61" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">&#39;fill_value&#39;</span></span>
+<span id="section-cb9-62"><a href="#section-cb9-62" tabindex="-1"></a>  )</span>
+<span id="section-cb9-63"><a href="#section-cb9-63" tabindex="-1"></a>)</span>
+<span id="section-cb9-64"><a href="#section-cb9-64" tabindex="-1"></a></span>
+<span id="section-cb9-65"><a href="#section-cb9-65" tabindex="-1"></a><span class="do">## points list for tab 4: all-------------</span></span>
+<span id="section-cb9-66"><a href="#section-cb9-66" tabindex="-1"></a>points_all <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="section-cb9-67"><a href="#section-cb9-67" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="section-cb9-68"><a href="#section-cb9-68" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&#39;points_parks&#39;</span>,</span>
+<span id="section-cb9-69"><a href="#section-cb9-69" tabindex="-1"></a>    <span class="at">data =</span> points_parks,</span>
+<span id="section-cb9-70"><a href="#section-cb9-70" tabindex="-1"></a>    <span class="at">long =</span> <span class="st">&#39;long&#39;</span>,</span>
+<span id="section-cb9-71"><a href="#section-cb9-71" tabindex="-1"></a>    <span class="at">lat =</span> <span class="st">&#39;lat&#39;</span>,</span>
+<span id="section-cb9-72"><a href="#section-cb9-72" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">&#39;label&#39;</span></span>
+<span id="section-cb9-73"><a href="#section-cb9-73" tabindex="-1"></a>  ),</span>
+<span id="section-cb9-74"><a href="#section-cb9-74" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="section-cb9-75"><a href="#section-cb9-75" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&#39;points_campgrounds&#39;</span>,</span>
+<span id="section-cb9-76"><a href="#section-cb9-76" tabindex="-1"></a>    <span class="at">data =</span> points_campgrounds,</span>
+<span id="section-cb9-77"><a href="#section-cb9-77" tabindex="-1"></a>    <span class="at">long =</span> <span class="st">&#39;long&#39;</span>,</span>
+<span id="section-cb9-78"><a href="#section-cb9-78" tabindex="-1"></a>    <span class="at">lat =</span> <span class="st">&#39;lat&#39;</span>,</span>
+<span id="section-cb9-79"><a href="#section-cb9-79" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">&#39;label&#39;</span></span>
+<span id="section-cb9-80"><a href="#section-cb9-80" tabindex="-1"></a>  )</span>
+<span id="section-cb9-81"><a href="#section-cb9-81" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+</div>
+<div id="section-plug-into-shiny-uiserver" class="section level1">
+<h1>Plug into Shiny UI/Server</h1>
+<div id="section-set-standard-shiny-ui" class="section level2">
+<h2>Set Standard Shiny UI</h2>
+<p>As usual with Shiny, we set up a basic <code>ui</code> for the app.
+For each <code>tabPanel()</code> the title to display goes in quotes
+first, followed by the function <code>map_UI()</code> with an id you
+create for each map.</p>
+<div class="sourceCode" id="section-cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="section-cb10-1"><a href="#section-cb10-1" tabindex="-1"></a><span class="co"># 3. Set ui/layout --------</span></span>
+<span id="section-cb10-2"><a href="#section-cb10-2" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="section-cb10-3"><a href="#section-cb10-3" tabindex="-1"></a>    <span class="fu">titlePanel</span>(<span class="st">&quot;AtlasMaker Demo Map (v0.9)&quot;</span>),</span>
+<span id="section-cb10-4"><a href="#section-cb10-4" tabindex="-1"></a>        <span class="fu">mainPanel</span>(</span>
+<span id="section-cb10-5"><a href="#section-cb10-5" tabindex="-1"></a>            <span class="fu">tabsetPanel</span>(</span>
+<span id="section-cb10-6"><a href="#section-cb10-6" tabindex="-1"></a>                <span class="fu">tabPanel</span>(<span class="st">&#39;Flowering Plants&#39;</span>, <span class="fu">map_UI</span>(<span class="st">&#39;flowering_plants&#39;</span>)),</span>
+<span id="section-cb10-7"><a href="#section-cb10-7" tabindex="-1"></a>                <span class="fu">tabPanel</span>(<span class="st">&#39;Birds&#39;</span>, <span class="fu">map_UI</span>(<span class="st">&#39;birds&#39;</span>)),</span>
+<span id="section-cb10-8"><a href="#section-cb10-8" tabindex="-1"></a>                <span class="fu">tabPanel</span>(<span class="st">&#39;Amphibians &amp; Reptiles&#39;</span>, <span class="fu">map_UI</span>(<span class="st">&#39;amph_rept&#39;</span>)),</span>
+<span id="section-cb10-9"><a href="#section-cb10-9" tabindex="-1"></a>                <span class="fu">tabPanel</span>(<span class="st">&quot;All&quot;</span>, <span class="fu">map_UI</span>(<span class="st">&quot;allthegoods&quot;</span>))</span>
+<span id="section-cb10-10"><a href="#section-cb10-10" tabindex="-1"></a>            )</span>
+<span id="section-cb10-11"><a href="#section-cb10-11" tabindex="-1"></a></span>
+<span id="section-cb10-12"><a href="#section-cb10-12" tabindex="-1"></a>        )</span>
+<span id="section-cb10-13"><a href="#section-cb10-13" tabindex="-1"></a>    )</span></code></pre></div>
+</div>
+<div id="section-set-standard-shiny-server-with-atlasmakermap_server" class="section level2">
+<h2>Set Standard Shiny Server, with AtlasMaker::map_server</h2>
+<p>The <code>server</code> is where AtlasMaker uses the
+<code>map_server()</code> function to quickly fill in the lists we’ve
+created above.</p>
+<p>Using one map_server call per tab and starting with the
+‘flowering_plants’, we start with the id created in the UI, followed by
+setting the polygons and points arguments to the lists we created
+above.</p>
+<p>Set a leaflet supported poly_palette, point_color, polyline_color,
+and map_base_theme if desired.</p>
+<div class="sourceCode" id="section-cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="section-cb11-1"><a href="#section-cb11-1" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) {</span>
+<span id="section-cb11-2"><a href="#section-cb11-2" tabindex="-1"></a>    <span class="fu">map_server</span>(<span class="st">&quot;flowering_plants&quot;</span>,</span>
+<span id="section-cb11-3"><a href="#section-cb11-3" tabindex="-1"></a>               <span class="at">polygons =</span> polys_flowering_plants,</span>
+<span id="section-cb11-4"><a href="#section-cb11-4" tabindex="-1"></a>               <span class="at">polygons_legend_title =</span> <span class="st">&quot;Biodiversity Count&quot;</span>,</span>
+<span id="section-cb11-5"><a href="#section-cb11-5" tabindex="-1"></a>               <span class="at">polylines =</span> <span class="cn">NULL</span>,</span>
+<span id="section-cb11-6"><a href="#section-cb11-6" tabindex="-1"></a>               <span class="at">points =</span> points_flowering_plants,</span>
+<span id="section-cb11-7"><a href="#section-cb11-7" tabindex="-1"></a>               <span class="at">poly_palette =</span> <span class="st">&#39;RdPu&#39;</span>,</span>
+<span id="section-cb11-8"><a href="#section-cb11-8" tabindex="-1"></a>               <span class="at">point_color =</span> <span class="st">&#39;brown&#39;</span></span>
+<span id="section-cb11-9"><a href="#section-cb11-9" tabindex="-1"></a>               )</span>
+<span id="section-cb11-10"><a href="#section-cb11-10" tabindex="-1"></a>    <span class="fu">map_server</span>(<span class="st">&quot;birds&quot;</span>,</span>
+<span id="section-cb11-11"><a href="#section-cb11-11" tabindex="-1"></a>             <span class="at">polygons =</span> polys_birds,</span>
+<span id="section-cb11-12"><a href="#section-cb11-12" tabindex="-1"></a>             <span class="at">polylines =</span> lines_birds,</span>
+<span id="section-cb11-13"><a href="#section-cb11-13" tabindex="-1"></a>             <span class="at">points =</span> points_birds,</span>
+<span id="section-cb11-14"><a href="#section-cb11-14" tabindex="-1"></a>             <span class="at">map_base_theme =</span> <span class="st">&#39;Stamen.Watercolor&#39;</span>,</span>
+<span id="section-cb11-15"><a href="#section-cb11-15" tabindex="-1"></a>             <span class="at">poly_palette =</span> <span class="st">&#39;YlGn&#39;</span>,</span>
+<span id="section-cb11-16"><a href="#section-cb11-16" tabindex="-1"></a>             <span class="at">point_color =</span> <span class="st">&#39;#ffa500&#39;</span>,</span>
+<span id="section-cb11-17"><a href="#section-cb11-17" tabindex="-1"></a>             <span class="at">polyline_color =</span> <span class="st">&quot;#964b00&quot;</span></span>
+<span id="section-cb11-18"><a href="#section-cb11-18" tabindex="-1"></a>              )</span>
+<span id="section-cb11-19"><a href="#section-cb11-19" tabindex="-1"></a>    <span class="fu">map_server</span>(<span class="st">&quot;amph_rept&quot;</span>,</span>
+<span id="section-cb11-20"><a href="#section-cb11-20" tabindex="-1"></a>             <span class="at">polygons =</span> polys_amph_rept,</span>
+<span id="section-cb11-21"><a href="#section-cb11-21" tabindex="-1"></a>             <span class="at">polylines =</span> <span class="cn">NULL</span>,</span>
+<span id="section-cb11-22"><a href="#section-cb11-22" tabindex="-1"></a>             <span class="at">points =</span> points_amp_rept,</span>
+<span id="section-cb11-23"><a href="#section-cb11-23" tabindex="-1"></a>             <span class="at">map_base_theme =</span> <span class="st">&#39;Esri.WorldImagery&#39;</span>,</span>
+<span id="section-cb11-24"><a href="#section-cb11-24" tabindex="-1"></a>             <span class="at">poly_palette =</span> <span class="st">&#39;Greens&#39;</span>,</span>
+<span id="section-cb11-25"><a href="#section-cb11-25" tabindex="-1"></a>             <span class="at">point_color =</span> <span class="st">&quot;black&quot;</span></span>
+<span id="section-cb11-26"><a href="#section-cb11-26" tabindex="-1"></a>            )</span>
+<span id="section-cb11-27"><a href="#section-cb11-27" tabindex="-1"></a>    <span class="fu">map_server</span>(<span class="st">&quot;allthegoods&quot;</span>,</span>
+<span id="section-cb11-28"><a href="#section-cb11-28" tabindex="-1"></a>               <span class="at">polygons =</span> polys_all,</span>
+<span id="section-cb11-29"><a href="#section-cb11-29" tabindex="-1"></a>               <span class="at">polylines =</span> <span class="cn">NULL</span>,</span>
+<span id="section-cb11-30"><a href="#section-cb11-30" tabindex="-1"></a>               <span class="at">points =</span> points_all</span>
+<span id="section-cb11-31"><a href="#section-cb11-31" tabindex="-1"></a>              )</span>
+<span id="section-cb11-32"><a href="#section-cb11-32" tabindex="-1"></a>}</span></code></pre></div>
+<p><em>See the ‘colors’ section of Leaflet guide for options to pass in
+for colors/palettes: <a href="http://rstudio.github.io/leaflet/colors.html" class="uri">http://rstudio.github.io/leaflet/colors.html</a></em></p>
+<p><em>Pass in any base layer from the link into ‘map_base_theme’: <a href="http://leaflet-extras.github.io/leaflet-providers/preview/index.html" class="uri">http://leaflet-extras.github.io/leaflet-providers/preview/index.html</a></em></p>
+</div>
+</div>
+<div id="section-run-the-app" class="section level1">
+<h1>Run the App</h1>
+<p><strong>Please note:</strong> knitting this Markdown file will only
+display a static image of the app, run the following code chunk in your
+R session to see the fully interactive demo app.</p>
+<p>The demo app is admittedly a little messy style wise, but with the
+purpose to show how easily the aesthetics of the maps can be changed
+using the <code>map_server()</code> arguments.</p>
+<div class="sourceCode" id="section-cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="section-cb12-1"><a href="#section-cb12-1" tabindex="-1"></a><span class="co"># Run the application</span></span>
+<span id="section-cb12-2"><a href="#section-cb12-2" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</span></code></pre></div>
+<iframe data-deferred-src="appcd202d182b1f2423f14ca81bf5a34da0/?w=&amp;__subapp__=1" width="100%" height="400" class="shiny-frame shiny-frame-deferred"></iframe>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
